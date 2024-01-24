@@ -1,0 +1,1025 @@
+---
+title: "R-Introduction"
+subtitle: "A Workshop for Modul University Vienna Faculty"
+author: Gunther Maier
+toc: true
+number-sections: true
+bibliography: bibliography.bib
+format: pptx
+#  pdf: 
+#    papersize: a4
+#    pdf-engine: pdflatex
+#  html:
+#    theme: default
+##    toc_float: true
+---
+
+{{< pagebreak >}}
+
+# Introduction
+
+This is a very brief introduction to R. I compiled this information for a presentation to faculty at Modul University Vienna.
+
+## Why use R?
+
+There are a number of reasons why you should use R
+
+-   It is Open Source software and can be used for free
+-   It is used heavily in academia and also in some data-intensive industries
+-   It has strong support from experts who constantly implement new functionality
+-   There are thousands of packages available that extend the functions of R
+-   It is very flexible and has a very wide range of applications
+-   It is the computing workhorse for a wider range of applications; in particular in publishing
+-   It is part of a wider network of interacting open source tools (Pandoc, LaTeX, etc.)
+
+## Why not use R?
+
+There are also a number of reasons why you may not want to use R
+
+-   For a beginner, it is more difficult to use than most other statistics packages
+-   The syntax of commands and parameters is not consistent
+-   If you need quantitative data analysis only occasionally, it may not be worth the effort
+
+## The ways to use R
+
+There are different ways to use R. They range from very direct, where you type R commands and send them to R for execution, to very indirect, where you cannot even see the R code.
+
+### Via the R console
+
+The most direct form is the R console which you reach either through the RGui that you installed with R, or through the Console window of RStudio. In this mode you enter and execute one command after the other.
+
+### Via an R script
+
+You can collect all the commands that you want to run in a text file, an R script, and then execute the sequence of commands in one run. This is particularly useful for repeated tasks or when it is important to document the process.
+
+### Via RMarkdown or Quarto
+
+R scripts focus on the R commands. You may structure them with embedded comments so that after some time you can retrace your analysis. Depending how much you comment, you may have describing text embedded into your code.
+
+RMarkdown and Quarto are tools that go the other way. They put the text in the foreground and allow you to embed R code into the text. Both use markdown for structuring and formatting the text (this document, for example, was written in Quarto). The embedded R code is executed and typically the respective output is inserted underneath the respective chunk of code.
+
+With these tools, you can produce a wide range of output; from articles and books to presentations, web pages, blogs, and probably others.
+
+### Via Shiny
+
+When you create a Shiny application, the R code stays in the background. A Shiny application is typically run via some parameters on a web-page that the user sets or changes interactively. These new parameters are sent to your R code on a server and the result of the computations are transferred back to the browser and displayed. I just mention this as one of the ways to run R code. In the rest of the text, I will not talk about Shiny. This topic is beyond the scope of this presentation / document.
+
+\newpage
+
+# R and RStudio
+
+What is R and what is RStudio? I do not try to define what R is. It is many different things like
+
+-   a programming language,
+-   a statistics package,
+-   a tool for data management,
+-   and many more.
+
+The relation between R and RStudio is much clearer. Using the analogy of an automobile, R is the engine and RStudio is the cockpit. R does all the work. RStudio provides us with a more user friendly interface. In principle, we can do everything we do in RStudio also in the R console alone or via an R-script that we call from the R console. RStudio just makes our tasks a little easier. Because of that, we will exclusively use RStudio and always interact through it with R.
+
+## The many Windows of RStudio
+
+RStudio has four windows. Two on the left,
+
+-   "Source" (on top) and
+-   "Console" (at the bottom),
+
+and two on the right
+
+-   "Environment" (on top) and
+-   "Files" (at the bottom).
+
+Each one of them has tabs to sub-windows, buttons and tool bars. You can change the size of those windows by moving the border between them. Move the cursor to the vertical space between the windows on the left and those on the right. The cursor will change to four arrows. Click and hold the left mouse button and move the mouse to change the width of the left and right windows. You can do the same with the horizontal space between the windows. There, you can change the height of the windows (either on the left or on the right).
+
+Within the two columns, you can switch the size of each window between "minimum", "shared" and "maximum" through the buttons on the top right of each window.
+
+### Console
+
+The console window at the bottom left is practically the same as the console that opens when you start the RGui (R Graphical User Interface). In this window, you can enter R commands, click enter and see the result (if there is any that goes to the console). Also, when you execude some R commands from the source window, you will see the interaction in the console window.
+
+One advantage of the console in RStudio over the console of the RGui is the autocomplete function and the immediate help that RStudio provides. Click into the console window of RStudio and type "plot" (do not type Enter). RStudio will display a list with all the commands that begin with "plot". To the right of the list, with yellow background, you will see part of the help page of the currently marked command. When you press the F1-button, the full help pages will pop up in the "Help" pane in the Files window (bottom right). In the console window, move the selection to the first option in the list (saying just "plot" - you may have to type "plot" anew in the console window to get the list again) and press the "Tab" button. RStudio will enter the brackets that the command requires and in a tooltip show what you need to enter between the brackets.
+
+I use the console window only to try out R commands. When I write an R script or a text in RMarkdown or Quarto I sometimes want to try out an R command before I add it to my script or text. In that case, I type it into the console either to try it out or to get support from the console's support system.
+
+All the commands that you enter in the console and execute, are automatically pushed into the history. The history is very useful when you misspelled an R command in the console window. With the up and down keys on the keyboard you can scroll through the history. Correct the spelling and press Enter to run the - now hopefully - correctly spelled command.
+
+Click into the console window of RStudio, type
+
+```{r}
+#| eval: false
+5 + 7
+```
+
+and then Enter. R will calculate this function and output the result in the console:
+
+```{r}
+#| echo: false
+5 + 7
+```
+
+Now, press the up-key. You will see the function again in the console. Press the back-key to erase the 7, type 9 and enter again.
+
+```{r}
+5 + 9
+```
+
+The new result will be displayed again in the console.
+
+Now, make sure you see the "History" tab in the "Environment" window (top right) and click that tab. You will see the two commands ("5 + 7" and "5 + 9") in the history. We will talk more about this below.
+
+### Source
+
+When you work more with R, the source window will be the window you will use most often. To organize, manage, and document the workflow of your analysis, it makes sense to collect the respective R commands in an R script, an RMarkdown or a Quarto document. Since I will present RMarkdown and Quarto at the end of the lecture, I will concentrate here only on the R script option.
+
+To avoid confusion, let us first clear the console. Either press Ctrl-L or select "Clear Console" from "Edit" in the menu.
+
+When you created your R project, RStudio opened an empty source window. Move the cursor to this window and click. Then, enter the following lines
+
+```{r}
+#| eval: false
+# R as a calculator
+
+5 + 7
+5 + 9
+
+# A first plot
+
+plot(10:1)
+```
+
+When you have entered this, nothing will happen in the console. All you did so far is to collect these lines in your R script. You can execute the entire script or only parts of it. Place the cursor at the top of the script in your source window and press Ctrl-Enter. RStudio will jump to the first executable line ("**5 + 7**"), send that to the console (i.e., to R) where it will be executed. Instead of pressing Ctrl-Enter you may also click the Run button. When you select some or all lines in the script and press Ctrl-Enter, the selected lines will be executed.
+
+If you want to execute all the lines in the script, you may want to click the Source button in the task bar of the source window.
+
+The output of the plot command will not appear in the console, but in the Plots pane of the files window (bottom right). You may have to click the "Plots" tab to see the output.
+
+Lines beginning with "\#" are comments. As you may have realized by now, R skips such comments as well as any empty lines. The plot command gets as input a list of numbers running from 10 down to 1. This is what "10:1" generates. These values are shown on the vertical axis in the plot. The horizontal axis shows the sequence of the numbers. Change the list to "1:10" and to "10:20" and see how the plot changes.
+
+### Environment
+
+The two windows in the right column each contains a number of panes. Also, the list of panes is not constant. For certain types of project RStudio inserts additional panes.
+
+As we will see later, the Environment pane in the Environment window lists all the variables, data frames, functions, etc. that we created in the current session. Currently, the environment is empty. Move the cursor into the console window and click. Then enter
+
+```{r}
+#| eval=TRUE
+a <- 5 + 7
+```
+
+and hit Enter. This command creates a variable named "a" and assigns the result of "5 + 7" to it. The assignment operator "\<-" consists of the two characters "\<" and "-" with nothing in between. It means "Assign the result of the calculation to the right to the variable to the left. After you hit Enter, the variable"a" and its value showed up in the environment pane in the environment window. Note that in the console the result of the calculation, 12, is not displayed. Because of the assignment operator the result is sent to the variable "`a`" and not to the console.
+
+When you type "`a`" and Enter into the Console, the result will be displayed:
+
+```{r}
+a
+```
+
+When you want to assign the result of a calculation to a variable and *also* want to see the result of the calculation, you can enclose the statement in parentheses like in the following example. It creates a variable "`b`" *and* also shows the result.
+
+```{r}
+(b <- 224 / 86)
+```
+
+We already mentioned the History and the History pane. The executed commands are accumulated here. If you want to execute a command way back in the history, you do not have to scroll with the up-key until you get there. Just scroll through the history pane, click into the respective line and then click the button "To Console". This will send this command (or a block of marked commands) to the console. In the same way, you can send commands from the history to the source window. The "Disk"-button lets you save the whole history into a text file. With the broom button, you can clean out the history. When you do this, the history is deleted and you cannot scroll through it any more.
+
+### Files
+
+Also the Files window has a number of panes. The Files pane shows the files in the current working directory. Through the buttons you can do some standard file management operations.
+
+We have already seen the Plots pane above. With the Zoom button you can display a larger version of the plot in a popup window. Via Export, you can copy the save the plot in various formats or copy it to the clipboard.
+
+The Packages pane lists all the packages that you have installed. The Update button allows you to list all the packages that need an update and update them. The checkbox in the first column shows whether the respective package is loaded or not. You can load and unload a package by setting and removing this checkmark.
+
+The Help pane links to the R help function. When you request help for some topic, the result will be displayed in this pane.
+
+{{< pagebreak >}}
+
+# R Packages
+
+A lot of the functionality of R is actually in packages. Some packages are so central that they are installed and loaded by default. Others need to be installed and loaded. When you install a package, the respective files are downloaded from a repository and stored on your computer. After you have installed a package, the maintainer of the package may update the code and provide a new version in the repository. In that case, your package may need updating. You may do this via the Packages pane in the Files window or via the menu items Tools - Check for Package Updates.
+
+## The CRAN repository
+
+The most important source of R packages is CRAN (Comprehensive R Archive Network, <https://cran.r-project.org/>). As a user, you can get tested and verified versions of R packages from this repository. CRAN is the default source for R packages and whenever you call `install.packages("package-name")` R will search for the specified package on CRAN and install it when found.
+
+As the time of this writing, there are over 20,000 packages available on CRAN. The CRAN webpage provides lists by date of submission and by name.
+
+## Installing a package
+
+Let us install the package "readxl", which allows us to read Excel files. In RStudio, we can install this package in one of three ways
+
+1.  Go to the Packages pane in the Files window and click the Install button.
+
+2.  Select Tools - Install Packages from the menu.
+
+3.  Type "install.packages()" into the Console
+
+In all three options you then enter "readxl" and type Enter. In the first two options, you omit the quotation marks, in the third option, the quotation marks are required.
+
+```{r}
+#| eval: false
+install.packages("readxl")
+```
+
+You should install a package only once. It does not do any harm to reinstall it, but, we try to avoid the extra traffic on the CRAN server and on the Internet.
+
+## Loading a package
+
+While you install packages only once, you need to load a package every time you want to use it. To load the package "readxl", enter
+
+```{r}
+library(readxl)
+```
+
+{{< pagebreak >}}
+
+# Finding help
+
+There is a lot of help available for R. A Google search usually yields numerous links to webpages, blog entries, discussions, and videos. This is useful when you are looking for a concept or method, but do not know how that is implemented in R.
+
+When you need help on a function or package you know the name of, it makes more sense to use the help feature of R. R also contains its own extensive support system. It is described in <https://www.r-project.org/help.html>.
+
+You can request help either with the `help()` function or with the `?` operator. For example, to get information about the plot function, you can issue
+
+```{r}
+#| eval: false
+help(plot)
+```
+
+or
+
+```{r}
+#| eval: false
+?plot
+```
+
+The `?` operator is a somewhat limited version of the `help()`function. It can only be used for available functions where you know the name.
+
+In both cases, the help page of the plot function will be shown in the Help pane of the Files window. It contains a description, a list and description of the parameters, and examples.
+
+If you need help about a package, use the command
+
+```{r}
+#| eval: false
+help(package = "package-name")
+```
+
+For help about a function defined in a package or a dataset provided by a package that you have not loaded, use the `help()`function with the package operator. For example, to get information about the dataset "mpg" that is provided by the package "ggplot2", use the command
+
+```{r}
+#| eval: false
+help(mpg, package = "ggplot2")
+```
+
+{{< pagebreak >}}
+
+# Loading data
+
+## Using data available in R and R packages
+
+R comes with a set of data-sets that are handy for testing and demonstration purposes. The data() command without parameters generates a list of all the datasets (the output goes to a separate window and therefore does not show in Quarto).
+
+```{r}
+#| eval: false
+data()
+```
+
+If you want to see **all** datasets available in **all** installed packages, use the following command. It is mentioned at the bottom of the output of "data()". Again, the output does not show in Quarto,
+
+```{r}
+#| eval: false
+data(package = .packages(all.available = TRUE))
+```
+
+One of the datasets available by default (in the standard package "datasets") is "mtcars". To use this dataset in our analysis, we type
+
+```{r}
+data("mtcars")
+```
+
+This loads the dataset "mtcars" into the environment. Check the Environment pane in the Environment window. You should see an entry named "mtcars".
+
+The data is now available as a dataframe in your R session. To investigate the data, we can list the first six lines with
+
+```{r}
+head(mtcars)
+```
+
+In one webpage we saw that there is also a dataset "mpg" with information about fuel consumption of various cars. We try to load this datase with
+
+```{r}
+data("mpg")
+```
+
+This command generates an error message. The reason is that the package "ggplot2", which contains this dataset is not available in our R session yet. If we do not want to load this package, we can set the "package" parameter in the data() command:
+
+```{r}
+data(mpg, package="ggplot2")
+```
+
+Alternatively, we can first load the package and then the dataset.
+
+```{r}
+library(ggplot2)
+data(mpg)
+```
+
+Again, we list the head of the dataframe.
+
+```{r}
+head(mpg)
+```
+
+## Importing an Excel-file
+
+We have already loaded the package `readxl` above. The package contains a function `read_excel`. Take a look at the description of this function through `?read_excel`.
+
+To demonstrate and test, we need data in Excel format. Let us use the Austrian results of the EU-elections 2014. Go to the webpage <https://www.data.gv.at/>, and select "Daten" - "Datensatz finden" (you may want to witch to English and then select "data" - "find dataset"). Enter "EU Wahl 2014" to the search field and hit Enter. Scroll down to "Ergebnisse der EU-Wahl 2014 (BMI)" and click the green button with the white "X". This will download the Excel-file to your download directory. Move or copy the file to your project directory.
+
+Now, run
+
+```{r}
+EU_elections <- read_excel(
+  "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx")
+```
+
+R alerts us that some of the variables were given new names. To view the first six lines and five columns of the dataset, enter
+
+```{r}
+head(EU_elections, c(6, 5))
+```
+
+The parameter `c(6, 5)` sets the number of rows to display to 6 and the number of columns to 5.
+
+Alternatively, you may want to load the whole data frame into the viewer with
+
+```{r}
+#| eval: false
+View(EU_elections)
+```
+
+When we look at the data, we find that there are some problems. Underneath the variable names, we see a row with mainly "NA" values. In columns 5-7 we see that there seems to be a second row for the variable header. Because of the strings in these fields, all the values in columns 5-7 are stored as characters (indicated by the "<chr>").
+
+To avoid these problems, we can tell the function `read_excel()` to skip the first two lines.
+
+```{r}
+#| code-overflow: wrap
+EU_elections <- read_excel(
+  "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx",
+  skip=2)
+head(EU_elections, c(6, 7))
+```
+
+Now, we have the problem that the first line of data is used as variable names. So, we also tell the function to **not** read column names
+
+```{r}
+#| code-overflow: wrap
+EU_elections <- read_excel(
+  "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx",
+  skip=2, 
+  col_names = FALSE)
+head(EU_elections, c(6, 7))
+```
+
+Instead of `col_names = FALSE`, we can also provide a vector of variable names to the parameter `col_names`. This will give us a nice data frame to use.
+
+```{r}
+EU_elections <- read_excel(
+  "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx",
+  skip=2, 
+  col_names = c("GKZ", "Name", "Voters", "Turnout", "Votes", "invalid", 
+                "valid", "ÖVP", "ÖVP_percent", "SPÖ", "SPÖ_percent", 
+                "FPÖ", "FPÖ_percent", "GRÜNE", "GRÜNE_percent", "BZÖ", 
+                "BZÖ_percent", "NEOS", "NEOS_percent", "RECOS", 
+                "RECOS_percent", "ANDERS", "ANDERS_percent", "EUSTOP",
+                "EUSTOP_percent"))
+head(EU_elections, c(6, 7))
+```
+
+## Importing a CSV-file directly from the Internet
+
+We pack two new topics under this heading: (1) reading CSV-files and (2) reading data directly from the Internet.
+
+CSV is a common data format and stands for "Comma Separated Variables". This name, however, is misleading because in German speaking countries it is usually the semicolon (;), not the comma that separates variables.
+
+R provides two functions for reading a CSV file: `read.csv()` and `read.csv2()`. The first version uses English standards (comma as variable separator and period as decimal separator), the second version uses German standards (semicolon as variable separator and comma as decimal separator). In both cases, you can define the respective separators with the parameters `sep=` and `dec=`.
+
+Some data import functions in R allow you to specify a url instead of a local filepath for the file. The two CSV-functions are among them, `read_excel()`is not. When you go back to the <https://www.data.gv.at/> webpage, to the entry "Ergebnisse der EU-Wahl 2014 (BMI)", you will see an orange icon marked "CSV". Right-click this icon and select Copy Link to copy the url into your computer's clipboard. Paste this url into the following call of `read.csv2()`.
+
+```{r}
+#| eval: false
+csvurl <- paste("https://www.data.gv.at/katalog/dataset/", 
+                "2b10a91b-51d5-4e34-b992-8fd3a3121f0d/resource/",
+                "a5ccea30-a505-4376-bfa3-fa2585c69192/download/",
+                "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.csv", 
+            sep="")
+EU_elections_csv <- read.csv2(csvurl)
+```
+
+This does not work. The reason is again the issue with the column names, which are not unique. We can again skip the first two lines with `skip = 2`. Unfortunately, this function does not allow us to provide variable names as before. We can only set `header = FALSE` to prevent the function from interpreting the first line as variable names.
+
+```{r}
+csvurl <- paste("https://www.data.gv.at/katalog/dataset/", 
+                "2b10a91b-51d5-4e34-b992-8fd3a3121f0d/resource/",
+                "a5ccea30-a505-4376-bfa3-fa2585c69192/download/",
+                "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.csv", 
+            sep="")
+EU_elections_csv <- read.csv2(csvurl, 
+    skip=2, 
+    header = FALSE)
+head(EU_elections_csv, c(6, 7))
+```
+
+Note that the "ü" in "Burgenland Süd" is not read correctly. This issue is related to the import of the file from the Internet. German Umlaut characters are treated differently in various character systems, socalled "encodings". To fix this, we need to use the parameter `encoding` and specify the correct encoding. An alternative fix would be to download the file to the local machine and then read it into R in a second step.
+
+We use the following code to read the file with the correct encoding:
+
+```{r}
+csvurl <- paste("https://www.data.gv.at/katalog/dataset/", 
+                "2b10a91b-51d5-4e34-b992-8fd3a3121f0d/resource/",
+                "a5ccea30-a505-4376-bfa3-fa2585c69192/download/",
+                "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.csv", 
+            sep="")
+EU_elections_csv <- read.csv2(csvurl, 
+    skip=2, 
+    header = FALSE,
+    encoding = "latin1")
+head(EU_elections_csv, c(6, 7))
+```
+
+Now the Umlaut characters are displayed correctly.
+
+With `read.csv2()`, we cannot specify the variable names and have to set the correct names in a separate step. With the function `colnames()` we can get and set the column names of a data frame.
+
+```{r}
+colnames(EU_elections_csv) <- c("GKZ", "Name", "Voters", "Turnout", 
+      "Votes", "invalid", "valid", "ÖVP", "ÖVP_percent", "SPÖ", 
+      "SPÖ_percent", "FPÖ", "FPÖ_percent", "GRÜNE", "GRÜNE_percent", 
+      "BZÖ", "BZÖ_percent", "NEOS", "NEOS_percent", "RECOS", 
+      "RECOS_percent", "ANDERS", "ANDERS_percent", "EUSTOP",
+      "EUSTOP_percent")
+head(EU_elections_csv, c(6, 7))
+```
+
+{{< pagebreak >}}
+
+# Viewing data
+
+In any statistical software, it is always a good idea, to check and validate your data before you use it. That the routine you used to read the data does not generate an error message, does not imply that your data has been read *correctly*. Some data may be distorted, read in the wrong format, some numbers may end up in the wrong variables, etc.
+
+I do not want to go into depth about checking and verifying data. At this stage, I just want to collect a few tools that you can use to look at your data.
+
+## `head()`, `tail()`, and `data.table()`
+
+We have already seen the command `head()` at work above. By default, it shows the first 6 rows for all the variables in the data frame. When the variables do not fit horizontally, the function prints them in blocks underneath one another. This output may be somewhat confusing and difficult to read. As you saw above, you can explicitly specify the numbers of rows and columns to display.
+
+The command `tail()` does the same as `head()`, but with the last six lines of the dataframe. The function `data.table()`, which is available in the package "data.table", combines the functionality of `head()` and `tail()` and shows the first and the last six lines of the dataset.
+
+## `View()`
+
+The command `View()` (note the capital "V") displays the data frame in a spreadsheet like form. The output is placed in a new tab in the Source window of RStudio. This is probably the best option to inspect your data because you can scroll through all the rows and columns. The function may fail, however, when you have to deal with a very large data frame.
+
+When you move the cursor over the name of a column, you will see more information about this variable in a tooltip. Run `View(EU_elections)`, place the cursor over "Turnout", and after a second you will see that this is column 4 of the data frame, that the format is "numeric" and that the numbers are in the range "0.1 - 0.8".
+
+You can call this function also from the Environment pane of the Environment window. To the right of every listed data frame there is a light-blue icon with a data grid. Clicking that will load this data frame into `View()`.
+
+## The glimpse command
+
+Somewhere between `head()` and `tail()` on the one hand and `View()` on the other is the `glimpse()` command from the package "dplyr". This package is loaded automatically when you load the package "tidyverse" (see below).
+
+```{r}
+library(dplyr)
+glimpse(EU_elections)
+```
+
+This function displays the size of the data frame (number of rows and number of columns) and then for every variable its name, its data type, and the first few values (whatever fits into the available horizontal space).
+
+## Nicer looking tables
+
+There are a number of packages that provide functions for nicely formatted tables. One example is the function `gt()` from the "gt" package. Try it out with the following code.
+
+```{r}
+library(gt)
+gt(EU_elections[1:8, 1:7])
+```
+
+I added `[1:8, 1:7]` to the name of the data frame to restrict the table to the first eight rows and the first seven columns. This is solely for display purposes for the PDF-output. When you leave this out and use `gt(EU_elections)`, the whole data frame will be shown in the table.
+
+When you call this function from the Console, the output will show up in the Viewer pane of the Files window. Click the Zoom button to get a larger view in a separate window. With the Export button you can also save the table as a graphic, as a webpage, or copy it to the clipboard to paste it into another program.
+
+{{< pagebreak >}}
+
+# Managing data
+
+When we have read our data into R, we usually have to do some data manipulations before we can run some analysis. For these tasks, we will use the package "tidyverse" that is quite popular for these tasks. One advantage of the data-management functions in this package is that these functions can be piped with the result of one function being sent into the next one. We will see this in action below.
+
+For this section, I follow the video "Data wrangling with R in 27 minutes" by Andrew Gard, a professor of mathematics and computer science at Lake Forest College, in Lake Forest IL, USA (<https://youtu.be/oXImkptBpqc?si=7tk9yqxUoI9I-ooX>).
+
+Before we continue, let us first load the package "tidyverse" (this produces some output which I suppress here):
+
+```{r}
+#| output: false
+
+library(tidyverse)
+```
+
+When you load this package, you are actually loading a set of sub-packages. The functions that we will use in this section are all in the package "dplyr". Instead of "tidyverse" you could actually just load this package and still get the functions that I will discuss here.
+
+Another important sub-package of "tidyverse" is "ggplot2", an innovative package for plotting variables.
+
+## Selecting rows
+
+The dataframe "EU_elections" that we loaded before, contains information about all communes in Austria. In a first step, suppose, we are only interested in the results for Lower Austria and want to extract those from the data frame.
+
+When we inspect the data we see that for all communes in Lower Austria the first variable (GKZ) starts with "G3". So, we want to select those rows where "GKZ" starts with "G3". We do this with the function `filter()`. We can use this function in the standard form by giving it the input data frame and a condition for the filtering. For the condition, we use the function `str_starts()` and pass it the name of the variable to investigate and the string that we want the variable to start with. The following function returns "TRUE" when the variable "GKZ" starts with "G3" and FALSE otherwise.
+
+```{r}
+#| eval: false
+str_starts(GKZ, "G3") 
+```
+
+So, our filter is as follows. We put the result into the data frame "tst".
+
+```{r}
+tst <- filter(EU_elections, str_starts(GKZ, "G3"))
+```
+
+Load the result into the viewer with `View(tst)`. You should only see data for Lower Austria.
+
+Using piping, we can achieve exactly the same result with
+
+```{r}
+tst <- EU_elections %>% 
+  filter(str_starts(GKZ, "G3"))
+```
+
+Here, we first determine the data frame and then pipe that to `filter()` with the piping command `%>%`. In RStudio, the keyboard shortcut for the piping command is "Ctrl-Shift-M". Note that we omit the name of the data frame in the `filter()` command.
+
+In this simple example, the benefits of piping are not so obvious. They may become clearer when we want to use an additional filter. Say, we want to use only those observations from Lower Austria where the number of voters is larger than 10,000. In the standard notation, we can achieve this with a second condition in the `filter()` command:
+
+```{r}
+tst <- filter(EU_elections, str_starts(GKZ, "G3"), Voters > 10000)
+```
+
+With piping, we may use the result of the first `filter()`command and pipe it into a second one.
+
+```{r}
+tst <- EU_elections %>% 
+  filter(str_starts(GKZ, "G3")) %>% 
+  filter(Voters > 10000)
+```
+
+When we look at the result, we see that our filter also returns aggregates (districts, regions, the whole state). To eliminate those, we pipe the result through another filter. Now, we check whether "GKZ" ends with "00". This characterizes the aggregates. Since we want to *eliminate* those, we have to negate the result of `str_ends` with an exclamation mark ("!").
+
+```{r}
+tst <- EU_elections %>% 
+  filter(str_starts(GKZ, "G3")) %>% 
+  filter(Voters > 10000) %>% 
+  filter(!str_ends(GKZ, "00"))
+```
+
+This produces the expected output and also demonstrates the value of piping. The R code is much better readable than when it is written in the standard notation.
+
+## Selecting columns
+
+To select columns from the data frame, we use the command `select()`. To illustrate this command, say, we want to extract only the columns "GKZ", "Name", "Voters", "Votes" and "valid". We do this in the following way
+
+```{r}
+tst <- select(EU_elections, "GKZ", "Name", "Voters", "Votes", "valid")
+```
+
+Alternatively, we can also identify the columns by number. Above, we selected columns 1 to 3, 5, and 7. Therefore, the above statement is equivalent to
+
+```{r}
+tst <- select(EU_elections, 1:3, 5, 7)
+```
+
+View the results of both versions to verify that they are identical and only contain these columns. Try to generate a data frame with only these columns and only communes in Lower Austria with more than 10,000 voters.
+
+There are a number of helper functions available that allow us to identify columns by name. Suppose we want to exclude all the columns with "percent" in the name (all the percent variables). We could use the following command (it selects all columns whose name does not contain "percent").
+
+```{r}
+tst <- select(EU_elections, !contains("percent"))
+```
+
+Note the exclamation mark in front of `contains()`. We could also have used a minus sign and have said 'remove all columns that contain "percent"'.
+
+## Arranging rows
+
+Sometimes you need the observatons in a data frame in a certain order. Observations can be ordered with the `arrange()` command. All this command needs is the name of the variable by which to order. Suppose we want to see the data arranged by "GRÜNE_percent". We use this command:
+
+```{r}
+tst <- arrange(EU_elections, GRÜNE_percent)
+```
+
+In the results we see immediately that Tschanigraben in Burgenland has the lowest percentage (actually, the first eight communes all have no votes for this party). To find who has the highest percentage (the 7th district in Vienna), we have to scroll all the way to the bottom. If we want to arrange the observations in descending order of this variable, we just use a minus sign.
+
+```{r}
+tst <- arrange(EU_elections, -GRÜNE_percent)
+```
+
+The function `arrange()` can handle any number of variables and uses them from left to right to sort the observations. Say, we would like to order the observations for every State of Austria descending by the percentage of the party "GRÜNE". We could do this with the following command:
+
+```{r}
+tst <- arrange(EU_elections, substr(GKZ, 1, 2), -GRÜNE_percent)
+```
+
+We use the function `substr(GKZ, 1, 2)` to extract the first two characters from GKZ. They identify the "Bundesland". Since this is the first parameter after the name of the data frame, we first order the observations by Bundesland and then within every Bundesland by "GRÜNE_percent"; in descending order because of the minus sign.
+
+## Creating new variables
+
+With the command `mutate()` you can create new variables in the data frame. Suppose we want to see how the two parties that are currently in a coalition at the national level, ÖVP and GRÜNE, did in the EU elections 2014. So, we want to create a new variable, "COAL_percent" which is the sum of "ÖVP_percent" and "GRÜNE_percent". To limit the output, we also reduce the number of columns using the previously discussed instruments. Since there is no need for saving the converted data frame, we pipe it to `glimpse()` at the end.
+
+```{r}
+EU_elections %>% 
+  select(1:2, contains("percent")) %>% 
+  mutate(COAL_percent = ÖVP_percent + GRÜNE_percent) %>% 
+  arrange(-COAL_percent) %>% 
+  glimpse()
+```
+
+# Some data visualizations
+
+This section is only intended for demonstration purposes. Some of the functions and data requirements are demanding and therefore too time consuming in this general workshop. Graphing and mapping with R would be a good topic for a more specialized workshop.
+
+## Preparing data
+
+We want to look at the EU election data by state ("Bundesland") and by district ("Bezirk"). First, we extract the respective rows from the data-frame. By inspecting the data-frame, we see that the GKZ-column of all state rows ends with "0000". So, we can filter by this condition.
+
+```{r}
+bl <- EU_elections %>% 
+  filter(str_ends(GKZ, "0000")) %>% 
+  filter(!str_ends(GKZ, "00000"))
+```
+
+For the districts, we need to filter all rows that end on "00", but, eliminate those that end with four zeros (Austria and state totals), ald those where the district id is not numeric. for the last criterion we first extract the district id fromthe variable `GKZ` with `str_sub()`. It is between position 2 and 4. Then, we convert the result to a number with `as.numeric()`. When this is not a number, the result is `NA`. Therefore, in the final step, with `!is.na()` we select only those rows where the result is not `NA`.
+
+In the last line, we generate a variable `g_id` with the (numeric) district id. Note that this variable has the same name as the district id in `bez`.
+
+```{r}
+bez <- EU_elections %>% 
+  filter(!is.na(as.numeric(str_sub(GKZ, 2,4))))  %>% 
+  filter(!str_ends(GKZ, "0000")) %>% 
+  filter(str_ends(GKZ, "00")) %>% 
+  mutate(g_id = str_sub(GKZ, 2, 4))
+```
+
+For all the visualizations here, we use `ggplot2`. This package is loaded with the `tidyverse` package and it uses the "geometry of graphics" approach for the creation of graphics.
+
+## A bar chart
+
+First, we want to plot the number of voters in the Bundesländer in a vertical bars graph. 
+
+
+```{r}
+bl %>% 
+  ggplot(aes(Name, Voters)) +
+  geom_col()
+```
+
+
+We want the bars in a different color. With `color` we can set the outline of the bars, with `fill` the color of the filling. 
+
+```{r}
+bl %>% 
+  ggplot(aes(Name, Voters)) +
+  geom_col(color="darkblue", fill="blue")
+```
+
+## A Scatterplot
+
+
+```{r}
+bez %>% 
+  ggplot(aes(ÖVP_percent, SPÖ_percent)) +
+  geom_point()
+```
+
+We can overlay a regression line that shows the average relation between the two variables. By default, a confidence interval is added. When we specify `se = NULL`, the confidence interval is dropped.
+
+```{r}
+bez %>% 
+  ggplot(aes(ÖVP_percent, SPÖ_percent)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+## Maps
+
+For a more comprehensive introduction see [@mieno2023].
+
+We load the package `sf`. It implements the "Simple Feature" concept in R.
+
+We read the shapefile for the Austrian districts into `bez_map`. When we inspect it, we see that there is a column with the district ID and one called `geometry` with the outlines of each of the districts.
+
+```{r}
+library(sf)
+
+bez_map <- st_read("OGDEXT_POLBEZ_1_STATISTIK_AUSTRIA_20230101/STATISTIK_AUSTRIA_POLBEZ_20230101.shp")
+```
+
+To see what we got, we select the variable `geometry` and plot it. We get the outlines of the districts.
+
+```{r}
+bez_map  %>%  
+  select(geometry)  %>%  
+  plot()
+```
+
+Now, we merge the data in `bez` with the geographical information in `bez_map`. Since we used the same name for the district id, the function uses these values for merging. Then, we pipe the result to the function `st_as_sf()` to convert to "Simple Format".
+
+
+```{r}
+bez_full <- merge(bez_map, bez)  %>% 
+  st_as_sf()
+```
+
+Now, we are ready to plot the map. In the `aes()` function we specify that the areas should be filled according to the values of `GRÜNE_percent`. `geom_sf()` does the mapping, `scale_fill_viridis_c()` sets the color schema.
+
+```{r}
+ggplot(bez_full, aes(fill=GRÜNE_percent)) +
+  geom_sf() +
+  scale_fill_viridis_c()
+```
+
+Strangely, by default the lowest values are assigned the darkest colors. To reverse this, we set the parameter `direction` to -1.
+
+```{r}
+ggplot(bez_full, aes(fill=GRÜNE_percent)) +
+  geom_sf() +
+  scale_fill_viridis_c(direction = -1)
+```
+
+
+
+{{< pagebreak >}}
+
+# Some basic statistical analyses
+
+The EU election data is not very well suited for the types of analysis I want to discuss. Therefore, I want to use the dataset "diamonds" that we loaded with the package "tidyverse". You may want to look into the dataset with `View(diamonds)`.
+
+## Summary statistics
+
+One of the most used functions in R is `summary()`. It is a generic function that produces a summary of the supplied object. Depending on the class of the object, the output of `summary()` looks quite different.
+
+When we call `summary()` with a data frame, the function prints summary statistics for all the variables in the data frame. Here is the result for the data frame "diamonds".
+
+```{r}
+summary(diamonds)
+```
+
+Note the difference between "cut", "color", and "clarity" on the one hand and all the other variables on the other. The members of the second group are continuous variables. They can take on a range of values. The numbers we find in the variable "price", for example, represent the prices of the various diamonds. "cut", "color", and "clarity", on the other hand, are categorical variables. They categorize the observations. In R such variables are usually stored as factors with labels and values. The variable "cut", for example, has labels "Fair", "Good", etc. Internally, each of these categories is stored with a specific number. All diamonds with a "Good" cut, for example, may internally have the value 2 stored in this variable.
+
+As you can see in the result above, the output of `summary()` differs for the two types of variables. For continuous variables, the function shows the lowest and highest values, the mean, the median, and the first and third quartile. For categorial variables where those indicators make no sense, the function lists the categories and how many observations fall into each of them (absolute frequencies).
+
+## Grouped summaries
+
+We would like to get some of the statistics that we saw above for the whole dataset broken down by categories. The package "tidyverse" offers tools for that. With the function `group_by()` we can define categories in our data frame. The function `summarize()` (different from `summary()` above) then applies some analysis to each group separately.
+
+Suppose we want to get the mean and the standard deviation of the price for each of the "cut" categories. The following set of commands does exactly that. You can use any number of parameters for `summarize()`.
+
+```{r}
+diamonds  %>%  
+  group_by(cut)   %>%   
+  summarize(mean(price), sd(price))
+```
+
+We can define more appropriate headings for the columns:
+
+```{r}
+diamonds %>% 
+  group_by(cut) %>% 
+  summarize(av_price = mean(price), sd_price = sd(price))
+```
+
+The special function `n()` gives the number of observations in each group.
+
+```{r}
+diamonds %>% 
+  group_by(cut) %>% 
+  summarize(av_price = mean(price), sd_price = sd(price), count = n())
+```
+
+When we use more than one categorical variable in the `group_by()` command, we get more and smaller groups. The grouping is first done for the first variable, then within each group for the second variable, and so on.
+
+```{r}
+diamonds %>% 
+  group_by(cut, color) %>% 
+  summarize(av_price = mean(price), sd_price = sd(price), count = n())
+```
+
+## Crosstabulation
+
+We want to know whether the categories "cut" and "color" are related. Let us first create a two-way table.
+
+```{r}
+table(diamonds$cut, diamonds$color)
+```
+
+Since the command `table()` does not expect the data frame as the first parameter, we cannot use a pipe. Instead, we need to inform the function that our variables are in "diamonds". This is done with `dataframe$variable`.
+
+Alternatively, we can `attach()` the data frame "diamonds". When we do this, R will first look for variables in this dataframe. To undo this connection, use the command `detach()`.
+
+```{r}
+attach(diamonds)
+table(cut, color)
+```
+
+Instead of just printing the table, we should store it in an object and then work with this object. When we print the object, we get the same output as above.
+
+```{r}
+mytable <- table(cut, color)
+mytable
+```
+
+With `summary()`, we get meta information about the table and the results of a Chi-square test.
+
+```{r}
+mytable <- table(cut, color)
+summary(mytable)
+```
+
+Instead of the absolute frequencies, we may want to see relative frequencies. Also, we can request the Chi-square test explicitly from the table object.
+
+```{r}
+mytable <- table(diamonds$cut, diamonds$color)
+prop.table(mytable)
+chisq.test(mytable)
+```
+
+To reduce the number of digits in the table, wrap it in the `round()` function and supply the number of digits you want.
+
+```{r}
+mytable <- table(diamonds$cut, diamonds$color)
+round(prop.table(mytable),4)
+```
+
+## Analysis of Variance
+
+We want to check whether or not the three categorical variables significantly influence the price of diamonds. The appropriate method is Analysis of Variance, called by `aov()` in R.
+
+For the analysis of variance, we have to specify a model formula. This is the same as in regression analysis. We use a very simple version of the model formula. One can specify very different and quite complex models with this tool.
+
+Our model formula says: use "price" as the dependent variable and "cut", "color" and "clarity" as explanatory variables. Note the "\~" between "price" and the other variables and that the explanatory variables are combined with "+".
+
+```{r}
+aov(price ~ cut + color + clarity)
+```
+
+When we use the `aov()` command, the output is limited. We can get more detailed information with `summary()`. We store the result of `aov()` in an object and supply that to `summary()`.
+
+```{r}
+anova <- aov(price ~ cut + color + clarity)
+summary(anova)
+```
+
+We see that all three categorical variables significantly influence the price.
+
+## Regression Analysis
+
+We want to know how carat and the categories influence the price of diamonds. We run a linear regression with the command `lm()`. We expand the above model formula with "carat".
+
+```{r}
+lm(price ~ carat + cut + color + clarity)
+```
+
+When we run this, we get again very limited output. We get more information with the `summary()` function (we store the result of the regression analysis in the object "reg" and supply that to `summary()`).
+
+```{r}
+reg <- lm(price ~ carat + cut + color + clarity)
+summary(reg)
+```
+
+For every categorical variable there is one coefficient less estimated than the number of categories. I do not know (and could not find out) why the names of the categories look like that. In a real application, I would need to do that. Since we do not interpret the results, it does not really matter here.
+
+Anyways, we see that most regression coefficients are highly significant. From the t-value and significance indicator of "carat" we see that this variable significantly contributes to explaining the price.
+
+### Is the contribution of a categorical variable significant?
+
+For each of the categorical variables we get a number of regression coefficients. Most of them are significant, but not all. To check whether or not a categorical variable, say "color", as a whole is significant, we can run a likelihood ratio test. For that, we first run a regression with this variable dropped from the model formula
+
+```{r}
+reg.2 <- lm(price ~ carat + cut + clarity)
+summary(reg.2)
+```
+
+Now, we have two objects with regression results stored; "reg" and "reg.2". The package "lmtest" provides a function for likelihood ratio tests (`lrtest()`).
+
+```{r}
+library(lmtest)
+lrtest(reg.2, reg)
+```
+
+The result shows that the six color variables together have a significant impact on the price.
+
+### Checking the residuals
+
+An important aspect of regression analysis is to check the residuals of the "reg" model. The residuals are included in the "reg" object and can be accessed via `reg$residuals`. First, we calculate the mean and the standard deviation of the residuals, the minimum and the maximum.
+
+```{r}
+(reg.mean <- mean(reg$residuals))
+(reg.sd <- sd(reg$residuals))
+min(reg$residuals)
+max(reg$residuals)
+```
+
+In a second step, we plot a histogram of the residuals and overlay it with a normal density function with the mean and standard deviation that we calculated above.
+
+```{r}
+hist(reg$residuals, breaks=50, freq=FALSE)
+curve(dnorm(x, mean=reg.mean, sd=reg.sd), 
+      col="darkblue", lwd=2, add=TRUE)
+```
+
+{{< pagebreak >}}
+
+# Writing up and publishing your analysis
+
+When we do quantitative analysis, one of the problems is to keep track of our workflow. What dataset did we use for what step? After all the different trials, what is our final model version? Did we exclude observations from the analysis and which ones? Such questions can be particularly troubling when we work with one of those easy to use menu driven statistics programs.
+
+At a more general level, these questions raise issues of reproducibility and replicability that are discussed in the scientific literature.
+
+R and RStudio offer various tools for keeping track of your workflow. I cannot go into much detail here. I will just sketch the main issues.
+
+## Saving the history
+
+A very valuable tool in this context is the "history" that R collects. Whenever you submit a command to R via the console, R adds this command to the bottom of the history. To inspect the history, go to the History pane in the Environment window.
+
+With the "disk" icon in the tools bar of the History pane you can save the whole history to a file. You can do the same also from the console with the command `savehistory()`. The saved history is plain text. So you can give it the extension ".txt" or ".R", if you want to develop an R-script from it.
+
+## R scripts
+
+As mentioned before, you can collect R commands in R scripts either manually or by saving the history. R scripts have the file extension ".R". You can run the script (i.e., all the included commands in sequence) from the command line of your operating system with the program "Rscript". Alternatively, you can open the script in RStudio (File - Open File) and then execute it via the Source button. That is equivalent to typing `source("<path to script>")`in the console. For example, the following line runs the script "myscript.R" and echoes the commands in the script and their output:
+
+```{r}
+source("myscript.R", echo=TRUE)
+```
+
+A third option for running a script is the function `Rscript()` in the package "xfun".
+
+When you just collect the R commands in your script, as you get when you save the history, you will not achieve much improvement in terms of reproducibility and replicability. Without any further information, it will be difficult to understand your workflow after a few months. Comments can resolve some of these issues. I suggest that you structure your scripts with empty lines and comments that explain what is the purpose of the following set of commands. In an R script, everything following a `#` is a comment. You can add lines or blocks of lines of comments and append comments to individual commands.
+
+## RMarkdown and Quarto
+
+When you properly comment R scripts, you may reach a point where the comments become something like the backbone of a report, an article, or even a book. Instead of adding text in the form of comments to a set of R commands, you may want to add R commands to some text that you prepare. It would be great if you could even run the R commands from your text and embed their results into your text.
+
+This is exactly what you can achieve with RMarkdown and Quarto. Quarto is a more comprehensive version of RMarkdown. For our purpose, however, we do not have to worry about their differences. We will just talk about Quarto.
+
+According to the Quarto homepage, Quarto is
+
+> An open-source scientific and technical publishing system
+
+Quarto is a standard that allows you to combine formatted text with R code. Text formatting uses a markdown dialect. The syntac is quite simple. A line starting with one hash (`#`) followed by a blank, for example, creates a top level heading. Two hashes create a second level header, three a third level, and so on. One or more blank lines separate the paragraphs. Text enclosed in single asteriscs (`*text*`) is set in italics, double asteriscs (`**text**`) make the text bold. The markdown dialect of Quarto lets you include footnotes, figures, hyperlinks, references, and mathematical expressions using LaTeX syntax.
+
+### Code chunks and inline code
+
+A unique feature of Quarto and RMarkdown are "code chunks". Code chunks are snippets of R code embedded in your document. Usually, this code is executed by R and the result is inserted into the document underneath the code chunk.
+
+Code chunks start with ```` ```{r} ```` and end with ```` ``` ````. Everything between those markers is considered R code or a code chunk option. With code chunk options you can determine, for example, whether the R code should be shown and whether it should be executed. Quarto defines a large number of code chunk options.
+
+You can also embed code directly into your text. The syntax for that is the following:
+
+```{r}
+#| eval: false
+`r <code>`
+```
+
+This is most useful to extract specific results from the analysis. For example, we can use
+
+```{r}
+#| eval: false
+`r reg$coefficients["carat"]` 
+```
+
+to extract the estimate for the variable "carat" from the first regression. This could be used in the following text, for example: Between the full and the constrained regression, the coefficient of "carat" changes by `r round(reg.2$coefficients["carat"] - reg$coefficients["carat"], 2)` units from `r round(reg$coefficients["carat"],2)` to `r round(reg.2$coefficients["carat"],2)`.
+
+### How to use a Quarto document
+
+Quarto documents are identified with the file extension ".qmd". You can start, open, and edit Quarto documents in the Source window of RStudio, Whenever a Quarto document is open and active in RStudio, your tools will look somewhat different. In addition to a Source pane you will also see a Visual pane. When you switch to that pane, you will see the formatted version of your text. The visual pane is also an editor that helps you with the markdown syntax.
+
+Irrespective whether you use the visual or the text editor, each code chunk will be shown with a light gray background and with two buttons on the top right. Clicking the first one (a downward pointing triangle with a green bar) will execute all code chunks above the current one. Clicking the second one (a green triangle pointing right) will execute the current chunk. When a code chunk generates output, it will be inserted after the code chunk.
+
+You do not have to click through all the code chunks. The button "Run" in the toolbar offers a set of options. When you click the last one("Run All"), RStudio will go through your Quarto document and execute all code chunks in sequence. You can follow the execution in the Console. Any warnings or error messages will also be displayed there.
+
+In the toolbar there is also a button "Render". When you click this button, RStudio will execute all the code chunks and in addition generate some output from your Quarto document. Some possible output formats are **HTML**, **PDF**, **Word**, **OpenOffice**, and **ePub**. Which format to use is specified in the so called YAML-code at the top of a Quarto document. There you can specify a set of parameters that let you generate books, articles, presentations, blog entries, web pages, and so on. For the purpose of illustration, I will first produce a HTML-page and then a PDF-file with the same content.
+
+{{< pagebreak >}}
+
+# Conclusion
+
+This presentation provides a quick overview of R, RStudio, and some of their exciting new features like RMarkdown and Quarto. None of the aspects was covered comprehensively. Practically all R commands that I have mentioned offer more parameters that influence their behavior. We could go deeper in almost every aspect. Options that come to my mind are
+
+-   statistical procedures
+-   R data types
+-   graphics with R (esp. "ggplot")
+-   writing R functions
+-   details of the markdown language
+-   specifics of Quarto
+-   challenges of reproducibility and replicability
+
+{{< pagebreak >}}
+
+# References
+
+::: {#refs}
+:::
