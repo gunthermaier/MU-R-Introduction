@@ -1,0 +1,11 @@
+"GKZ", "Name", "Voters", "Turnout", "Votes", "invalid", 
+"valid", "ÖVP", "ÖVP_percent", "SPÖ", "SPÖ_percent", 
+"FPÖ", "FPÖ_percent", "GRÜNE", "GRÜNE_percent", "BZÖ", 
+"BZÖ_percent", "NEOS", "NEOS_percent", "RECOS", 
+"RECOS_percent", "ANDERS", "ANDERS_percent", "EUSTOP",
+"EUSTOP_percent"
+
+
+
+https://www.data.gv.at/katalog/dataset/2b10a91b-51d5-4e34-b992-8fd3a3121f0d/resource/a5ccea30-a505-4376-bfa3-fa2585c69192/download/eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.csv
+
