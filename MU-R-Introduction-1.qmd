@@ -6,11 +6,11 @@ toc: true
 number-sections: true
 bibliography: bibliography.bib
 format: 
-  pdf: 
-    papersize: a4
-    pdf-engine: pdflatex
-#  html:
-#    theme: default
+#  pdf: 
+#    papersize: a4
+#    pdf-engine: pdflatex
+  html:
+    theme: default
 ##    toc_float: true
 ---
 
