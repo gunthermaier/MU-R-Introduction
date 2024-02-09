@@ -1,14 +1,14 @@
 ---
-title: "R-Introduction"
+title: "R-Introduction - Part 2"
 subtitle: "A Workshop for Modul University Vienna Faculty"
 author: Gunther Maier
 toc: true
 number-sections: true
 bibliography: bibliography.bib
-format: pptx
-#  pdf: 
-#    papersize: a4
-#    pdf-engine: pdflatex
+format: 
+  pdf: 
+    papersize: a4
+    pdf-engine: pdflatex
 #  html:
 #    theme: default
 ##    toc_float: true
@@ -18,258 +18,11 @@ format: pptx
 
 # Introduction
 
-This is a very brief introduction to R. I compiled this information for a presentation to faculty at Modul University Vienna.
+This is the second part of a very brief introduction to R. I compiled this information for a presentation to faculty at Modul University Vienna.
 
-## Why use R?
+In this part I assume that you are familiar with the topics we covered in the first workshop. This includes topics like - the difference between R and RStudio - The main parts of RStudio - What are packages and where can I get them? - How to install a package - How to get help
 
-There are a number of reasons why you should use R
-
--   It is Open Source software and can be used for free
--   It is used heavily in academia and also in some data-intensive industries
--   It has strong support from experts who constantly implement new functionality
--   There are thousands of packages available that extend the functions of R
--   It is very flexible and has a very wide range of applications
--   It is the computing workhorse for a wider range of applications; in particular in publishing
--   It is part of a wider network of interacting open source tools (Pandoc, LaTeX, etc.)
-
-## Why not use R?
-
-There are also a number of reasons why you may not want to use R
-
--   For a beginner, it is more difficult to use than most other statistics packages
--   The syntax of commands and parameters is not consistent
--   If you need quantitative data analysis only occasionally, it may not be worth the effort
-
-## The ways to use R
-
-There are different ways to use R. They range from very direct, where you type R commands and send them to R for execution, to very indirect, where you cannot even see the R code.
-
-### Via the R console
-
-The most direct form is the R console which you reach either through the RGui that you installed with R, or through the Console window of RStudio. In this mode you enter and execute one command after the other.
-
-### Via an R script
-
-You can collect all the commands that you want to run in a text file, an R script, and then execute the sequence of commands in one run. This is particularly useful for repeated tasks or when it is important to document the process.
-
-### Via RMarkdown or Quarto
-
-R scripts focus on the R commands. You may structure them with embedded comments so that after some time you can retrace your analysis. Depending how much you comment, you may have describing text embedded into your code.
-
-RMarkdown and Quarto are tools that go the other way. They put the text in the foreground and allow you to embed R code into the text. Both use markdown for structuring and formatting the text (this document, for example, was written in Quarto). The embedded R code is executed and typically the respective output is inserted underneath the respective chunk of code.
-
-With these tools, you can produce a wide range of output; from articles and books to presentations, web pages, blogs, and probably others.
-
-### Via Shiny
-
-When you create a Shiny application, the R code stays in the background. A Shiny application is typically run via some parameters on a web-page that the user sets or changes interactively. These new parameters are sent to your R code on a server and the result of the computations are transferred back to the browser and displayed. I just mention this as one of the ways to run R code. In the rest of the text, I will not talk about Shiny. This topic is beyond the scope of this presentation / document.
-
-\newpage
-
-# R and RStudio
-
-What is R and what is RStudio? I do not try to define what R is. It is many different things like
-
--   a programming language,
--   a statistics package,
--   a tool for data management,
--   and many more.
-
-The relation between R and RStudio is much clearer. Using the analogy of an automobile, R is the engine and RStudio is the cockpit. R does all the work. RStudio provides us with a more user friendly interface. In principle, we can do everything we do in RStudio also in the R console alone or via an R-script that we call from the R console. RStudio just makes our tasks a little easier. Because of that, we will exclusively use RStudio and always interact through it with R.
-
-## The many Windows of RStudio
-
-RStudio has four windows. Two on the left,
-
--   "Source" (on top) and
--   "Console" (at the bottom),
-
-and two on the right
-
--   "Environment" (on top) and
--   "Files" (at the bottom).
-
-Each one of them has tabs to sub-windows, buttons and tool bars. You can change the size of those windows by moving the border between them. Move the cursor to the vertical space between the windows on the left and those on the right. The cursor will change to four arrows. Click and hold the left mouse button and move the mouse to change the width of the left and right windows. You can do the same with the horizontal space between the windows. There, you can change the height of the windows (either on the left or on the right).
-
-Within the two columns, you can switch the size of each window between "minimum", "shared" and "maximum" through the buttons on the top right of each window.
-
-### Console
-
-The console window at the bottom left is practically the same as the console that opens when you start the RGui (R Graphical User Interface). In this window, you can enter R commands, click enter and see the result (if there is any that goes to the console). Also, when you execude some R commands from the source window, you will see the interaction in the console window.
-
-One advantage of the console in RStudio over the console of the RGui is the autocomplete function and the immediate help that RStudio provides. Click into the console window of RStudio and type "plot" (do not type Enter). RStudio will display a list with all the commands that begin with "plot". To the right of the list, with yellow background, you will see part of the help page of the currently marked command. When you press the F1-button, the full help pages will pop up in the "Help" pane in the Files window (bottom right). In the console window, move the selection to the first option in the list (saying just "plot" - you may have to type "plot" anew in the console window to get the list again) and press the "Tab" button. RStudio will enter the brackets that the command requires and in a tooltip show what you need to enter between the brackets.
-
-I use the console window only to try out R commands. When I write an R script or a text in RMarkdown or Quarto I sometimes want to try out an R command before I add it to my script or text. In that case, I type it into the console either to try it out or to get support from the console's support system.
-
-All the commands that you enter in the console and execute, are automatically pushed into the history. The history is very useful when you misspelled an R command in the console window. With the up and down keys on the keyboard you can scroll through the history. Correct the spelling and press Enter to run the - now hopefully - correctly spelled command.
-
-Click into the console window of RStudio, type
-
-```{r}
-#| eval: false
-5 + 7
-```
-
-and then Enter. R will calculate this function and output the result in the console:
-
-```{r}
-#| echo: false
-5 + 7
-```
-
-Now, press the up-key. You will see the function again in the console. Press the back-key to erase the 7, type 9 and enter again.
-
-```{r}
-5 + 9
-```
-
-The new result will be displayed again in the console.
-
-Now, make sure you see the "History" tab in the "Environment" window (top right) and click that tab. You will see the two commands ("5 + 7" and "5 + 9") in the history. We will talk more about this below.
-
-### Source
-
-When you work more with R, the source window will be the window you will use most often. To organize, manage, and document the workflow of your analysis, it makes sense to collect the respective R commands in an R script, an RMarkdown or a Quarto document. Since I will present RMarkdown and Quarto at the end of the lecture, I will concentrate here only on the R script option.
-
-To avoid confusion, let us first clear the console. Either press Ctrl-L or select "Clear Console" from "Edit" in the menu.
-
-When you created your R project, RStudio opened an empty source window. Move the cursor to this window and click. Then, enter the following lines
-
-```{r}
-#| eval: false
-# R as a calculator
-
-5 + 7
-5 + 9
-
-# A first plot
-
-plot(10:1)
-```
-
-When you have entered this, nothing will happen in the console. All you did so far is to collect these lines in your R script. You can execute the entire script or only parts of it. Place the cursor at the top of the script in your source window and press Ctrl-Enter. RStudio will jump to the first executable line ("**5 + 7**"), send that to the console (i.e., to R) where it will be executed. Instead of pressing Ctrl-Enter you may also click the Run button. When you select some or all lines in the script and press Ctrl-Enter, the selected lines will be executed.
-
-If you want to execute all the lines in the script, you may want to click the Source button in the task bar of the source window.
-
-The output of the plot command will not appear in the console, but in the Plots pane of the files window (bottom right). You may have to click the "Plots" tab to see the output.
-
-Lines beginning with "\#" are comments. As you may have realized by now, R skips such comments as well as any empty lines. The plot command gets as input a list of numbers running from 10 down to 1. This is what "10:1" generates. These values are shown on the vertical axis in the plot. The horizontal axis shows the sequence of the numbers. Change the list to "1:10" and to "10:20" and see how the plot changes.
-
-### Environment
-
-The two windows in the right column each contains a number of panes. Also, the list of panes is not constant. For certain types of project RStudio inserts additional panes.
-
-As we will see later, the Environment pane in the Environment window lists all the variables, data frames, functions, etc. that we created in the current session. Currently, the environment is empty. Move the cursor into the console window and click. Then enter
-
-```{r}
-#| eval=TRUE
-a <- 5 + 7
-```
-
-and hit Enter. This command creates a variable named "a" and assigns the result of "5 + 7" to it. The assignment operator "\<-" consists of the two characters "\<" and "-" with nothing in between. It means "Assign the result of the calculation to the right to the variable to the left. After you hit Enter, the variable"a" and its value showed up in the environment pane in the environment window. Note that in the console the result of the calculation, 12, is not displayed. Because of the assignment operator the result is sent to the variable "`a`" and not to the console.
-
-When you type "`a`" and Enter into the Console, the result will be displayed:
-
-```{r}
-a
-```
-
-When you want to assign the result of a calculation to a variable and *also* want to see the result of the calculation, you can enclose the statement in parentheses like in the following example. It creates a variable "`b`" *and* also shows the result.
-
-```{r}
-(b <- 224 / 86)
-```
-
-We already mentioned the History and the History pane. The executed commands are accumulated here. If you want to execute a command way back in the history, you do not have to scroll with the up-key until you get there. Just scroll through the history pane, click into the respective line and then click the button "To Console". This will send this command (or a block of marked commands) to the console. In the same way, you can send commands from the history to the source window. The "Disk"-button lets you save the whole history into a text file. With the broom button, you can clean out the history. When you do this, the history is deleted and you cannot scroll through it any more.
-
-### Files
-
-Also the Files window has a number of panes. The Files pane shows the files in the current working directory. Through the buttons you can do some standard file management operations.
-
-We have already seen the Plots pane above. With the Zoom button you can display a larger version of the plot in a popup window. Via Export, you can copy the save the plot in various formats or copy it to the clipboard.
-
-The Packages pane lists all the packages that you have installed. The Update button allows you to list all the packages that need an update and update them. The checkbox in the first column shows whether the respective package is loaded or not. You can load and unload a package by setting and removing this checkmark.
-
-The Help pane links to the R help function. When you request help for some topic, the result will be displayed in this pane.
-
-{{< pagebreak >}}
-
-# R Packages
-
-A lot of the functionality of R is actually in packages. Some packages are so central that they are installed and loaded by default. Others need to be installed and loaded. When you install a package, the respective files are downloaded from a repository and stored on your computer. After you have installed a package, the maintainer of the package may update the code and provide a new version in the repository. In that case, your package may need updating. You may do this via the Packages pane in the Files window or via the menu items Tools - Check for Package Updates.
-
-## The CRAN repository
-
-The most important source of R packages is CRAN (Comprehensive R Archive Network, <https://cran.r-project.org/>). As a user, you can get tested and verified versions of R packages from this repository. CRAN is the default source for R packages and whenever you call `install.packages("package-name")` R will search for the specified package on CRAN and install it when found.
-
-As the time of this writing, there are over 20,000 packages available on CRAN. The CRAN webpage provides lists by date of submission and by name.
-
-## Installing a package
-
-Let us install the package "readxl", which allows us to read Excel files. In RStudio, we can install this package in one of three ways
-
-1.  Go to the Packages pane in the Files window and click the Install button.
-
-2.  Select Tools - Install Packages from the menu.
-
-3.  Type "install.packages()" into the Console
-
-In all three options you then enter "readxl" and type Enter. In the first two options, you omit the quotation marks, in the third option, the quotation marks are required.
-
-```{r}
-#| eval: false
-install.packages("readxl")
-```
-
-You should install a package only once. It does not do any harm to reinstall it, but, we try to avoid the extra traffic on the CRAN server and on the Internet.
-
-## Loading a package
-
-While you install packages only once, you need to load a package every time you want to use it. To load the package "readxl", enter
-
-```{r}
-library(readxl)
-```
-
-{{< pagebreak >}}
-
-# Finding help
-
-There is a lot of help available for R. A Google search usually yields numerous links to webpages, blog entries, discussions, and videos. This is useful when you are looking for a concept or method, but do not know how that is implemented in R.
-
-When you need help on a function or package you know the name of, it makes more sense to use the help feature of R. R also contains its own extensive support system. It is described in <https://www.r-project.org/help.html>.
-
-You can request help either with the `help()` function or with the `?` operator. For example, to get information about the plot function, you can issue
-
-```{r}
-#| eval: false
-help(plot)
-```
-
-or
-
-```{r}
-#| eval: false
-?plot
-```
-
-The `?` operator is a somewhat limited version of the `help()`function. It can only be used for available functions where you know the name.
-
-In both cases, the help page of the plot function will be shown in the Help pane of the Files window. It contains a description, a list and description of the parameters, and examples.
-
-If you need help about a package, use the command
-
-```{r}
-#| eval: false
-help(package = "package-name")
-```
-
-For help about a function defined in a package or a dataset provided by a package that you have not loaded, use the `help()`function with the package operator. For example, to get information about the dataset "mpg" that is provided by the package "ggplot2", use the command
-
-```{r}
-#| eval: false
-help(mpg, package = "ggplot2")
-```
+I will repeat the parts we did about loading data.
 
 {{< pagebreak >}}
 
@@ -332,7 +85,11 @@ head(mpg)
 
 ## Importing an Excel-file
 
-We have already loaded the package `readxl` above. The package contains a function `read_excel`. Take a look at the description of this function through `?read_excel`.
+We first have to load the package `readxl`. The package contains a function `read_excel`. Take a look at the description of this function through `?read_excel`.
+
+```{r}
+library(readxl)
+```
 
 To demonstrate and test, we need data in Excel format. Let us use the Austrian results of the EU-elections 2014. Go to the webpage <https://www.data.gv.at/>, and select "Daten" - "Datensatz finden" (you may want to witch to English and then select "data" - "find dataset"). Enter "EU Wahl 2014" to the search field and hit Enter. Scroll down to "Ergebnisse der EU-Wahl 2014 (BMI)" and click the green button with the white "X". This will download the Excel-file to your download directory. Move or copy the file to your project directory.
 
@@ -664,12 +421,61 @@ bez <- EU_elections %>%
   mutate(g_id = str_sub(GKZ, 2, 4))
 ```
 
-For all the visualizations here, we use `ggplot2`. This package is loaded with the `tidyverse` package and it uses the "geometry of graphics" approach for the creation of graphics.
+## The simple `plot` function
 
-## A bar chart
+Although `ggplot2` has become the standard tool for graphing in R, the simple `plot` function is still useful for quick views of the data.
 
-First, we want to plot the number of voters in the Bundesländer in a vertical bars graph. 
+First, we want to plot the variables "ÖVP_percent" and "SPÖ_percent". We select these two variables from the dataframe and pipe them to the `plot` function:
 
+```{r}
+bez %>% 
+  select("ÖVP_percent", "SPÖ_percent") %>% 
+  plot()
+```
+
+Then, we are asked to add the results for FPÖ to our output. When we just add "FPÖ_percent" to our `select` statement, this is what we get:
+
+```{r}
+bez %>% 
+  select("ÖVP_percent", "SPÖ_percent", "FPÖ_percent") %>% 
+  plot()
+```
+
+The result is a **matrix of scatterplots** for all the pairs of variables. The corresponding plots above and below the main diagonal are identical, just flipped.
+
+We may then want to see all parties in one matrix. For that, we select the variables that contain "percent" (as above)
+
+```{r}
+bez %>% 
+  select(contains("percent")) %>% 
+  plot()
+```
+
+For the plot function, we always need at least two variables. When we provide just one, the output is not what we expect.
+
+```{r}
+bez %>% 
+  select("SPÖ_percent") %>%  
+  plot()
+```
+
+We need to add a sequence and probably want to plot the data by size. Below, we sort the data with `arrange` and then add a variable named "sequence" with values running from 1 to the number of rows in the dataframe (`n()`). We change the plot type to "l" for lines. If we want to see the observations as well, we can use "b" ("both") instead.
+
+```{r}
+bez %>% 
+  select("SPÖ_percent") %>% 
+  arrange(SPÖ_percent) %>% 
+  mutate(sequence = 1:n()) %>% 
+  plot(type = "l")
+```
+
+## A glimpse of `ggplot2`
+
+In recent years, `ggplot2` has become something like the standard tool for graphing in R. This package is loaded with the `tidyverse` package and it uses the "geometry of graphics" approach for the creation of graphics. The tool is very powerful (see e.g., [this Video](https://youtu.be/ZrkjRwsnj6Y?si=QGqSlVoeMbTKqBLp)), but needs more time to explain. Therefore, I just give a glimpse of the tool.
+
+### A bar chart
+
+First, we want to plot the number of voters in the Bundesländer in a vertical bars graph.
 
 ```{r}
 bl %>% 
@@ -677,8 +483,7 @@ bl %>%
   geom_col()
 ```
 
-
-We want the bars in a different color. With `color` we can set the outline of the bars, with `fill` the color of the filling. 
+We want the bars in a different color. With `color` we can set the outline of the bars, with `fill` the color of the filling.
 
 ```{r}
 bl %>% 
@@ -686,8 +491,7 @@ bl %>%
   geom_col(color="darkblue", fill="blue")
 ```
 
-## A Scatterplot
-
+### A Scatterplot
 
 ```{r}
 bez %>% 
@@ -704,7 +508,7 @@ bez %>%
   geom_smooth(method = "lm")
 ```
 
-## Maps
+### Maps
 
 For a more comprehensive introduction see [@mieno2023].
 
@@ -728,7 +532,6 @@ bez_map  %>%
 
 Now, we merge the data in `bez` with the geographical information in `bez_map`. Since we used the same name for the district id, the function uses these values for merging. Then, we pipe the result to the function `st_as_sf()` to convert to "Simple Format".
 
-
 ```{r}
 bez_full <- merge(bez_map, bez)  %>% 
   st_as_sf()
@@ -749,8 +552,6 @@ ggplot(bez_full, aes(fill=GRÜNE_percent)) +
   geom_sf() +
   scale_fill_viridis_c(direction = -1)
 ```
-
-
 
 {{< pagebreak >}}
 
@@ -969,7 +770,36 @@ According to the Quarto homepage, Quarto is
 
 > An open-source scientific and technical publishing system
 
-Quarto is a standard that allows you to combine formatted text with R code. Text formatting uses a markdown dialect. The syntac is quite simple. A line starting with one hash (`#`) followed by a blank, for example, creates a top level heading. Two hashes create a second level header, three a third level, and so on. One or more blank lines separate the paragraphs. Text enclosed in single asteriscs (`*text*`) is set in italics, double asteriscs (`**text**`) make the text bold. The markdown dialect of Quarto lets you include footnotes, figures, hyperlinks, references, and mathematical expressions using LaTeX syntax.
+Quarto [@tierney2022] is a standard that allows you to combine formatted text with R code. Text formatting uses a markdown dialect. The syntac is quite simple. A line starting with one hash (`#`) followed by a blank, for example, creates a top level heading. Two hashes create a second level header, three a third level, and so on. One or more blank lines separate the paragraphs. Text enclosed in single asteriscs (`*text*`) is set in italics, double asteriscs (`**text**`) make the text bold. The markdown dialect of Quarto lets you include footnotes, figures, hyperlinks, references, and mathematical expressions using LaTeX syntax.
+
+Here are a few examples using LaTeX mathematics:
+
+-   pure LaTeX (equation environment)
+
+```{=tex}
+\begin{equation}
+E = mc^2
+\end{equation}
+```
+-   pure LaTeX style (eqnarray environment)
+
+```{=tex}
+\begin{eqnarray}
+Y & \sim & X\beta_0 + X\beta_1 + \epsilon \\
+\epsilon & \sim & N(0,\sigma^2) \nonumber
+\end{eqnarray}
+```
+-   Quarto style (double dollar signs)
+
+$$
+Y \sim X\beta_0 + X\beta_1 + \epsilon
+$$
+
+$$
+\epsilon \sim N(0,\sigma^2)
+$$
+
+-   Mathematics in the text: In the statement above, $Y$ is the dependent variable, $X$ the independent variable. $\beta_0$ and $\beta_1$ are coefficients that we want to estimate. All the random influence is symbolized by $\epsilon$.
 
 ### Code chunks and inline code
 
