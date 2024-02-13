@@ -5,6 +5,7 @@ author: Gunther Maier
 toc: true
 number-sections: true
 bibliography: bibliography.bib
+standalone: true
 format: 
 #  pdf: 
 #    papersize: a4
@@ -33,6 +34,7 @@ I will repeat the parts we did about loading data.
 R comes with a set of data-sets that are handy for testing and demonstration purposes. The data() command without parameters generates a list of all the datasets (the output goes to a separate window and therefore does not show in Quarto).
 
 ```{r}
+#| label: chunk-1
 #| eval: false
 data()
 ```
@@ -40,6 +42,7 @@ data()
 If you want to see **all** datasets available in **all** installed packages, use the following command. It is mentioned at the bottom of the output of "data()". Again, the output does not show in Quarto,
 
 ```{r}
+#| label: chunk-2
 #| eval: false
 data(package = .packages(all.available = TRUE))
 ```
@@ -47,6 +50,7 @@ data(package = .packages(all.available = TRUE))
 One of the datasets available by default (in the standard package "datasets") is "mtcars". To use this dataset in our analysis, we type
 
 ```{r}
+#| label: chunk-3
 data("mtcars")
 ```
 
@@ -55,24 +59,28 @@ This loads the dataset "mtcars" into the environment. Check the Environment pane
 The data is now available as a dataframe in your R session. To investigate the data, we can list the first six lines with
 
 ```{r}
+#| label: chunk-4
 head(mtcars)
 ```
 
 In one webpage we saw that there is also a dataset "mpg" with information about fuel consumption of various cars. We try to load this datase with
 
 ```{r}
+#| label: chunk-5
 data("mpg")
 ```
 
 This command generates an error message. The reason is that the package "ggplot2", which contains this dataset is not available in our R session yet. If we do not want to load this package, we can set the "package" parameter in the data() command:
 
 ```{r}
+#| label: chunk-6
 data(mpg, package="ggplot2")
 ```
 
 Alternatively, we can first load the package and then the dataset.
 
 ```{r}
+#| label: chunk-7
 library(ggplot2)
 data(mpg)
 ```
@@ -80,6 +88,7 @@ data(mpg)
 Again, we list the head of the dataframe.
 
 ```{r}
+#| label: chunk-8
 head(mpg)
 ```
 
@@ -88,6 +97,7 @@ head(mpg)
 We first have to load the package `readxl`. The package contains a function `read_excel`. Take a look at the description of this function through `?read_excel`.
 
 ```{r}
+#| label: chunk-9
 library(readxl)
 ```
 
@@ -96,6 +106,7 @@ To demonstrate and test, we need data in Excel format. Let us use the Austrian r
 Now, run
 
 ```{r}
+#| label: chunk-10
 EU_elections <- read_excel(
   "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx")
 ```
@@ -103,6 +114,7 @@ EU_elections <- read_excel(
 R alerts us that some of the variables were given new names. To view the first six lines and five columns of the dataset, enter
 
 ```{r}
+#| label: chunk-11
 head(EU_elections, c(6, 5))
 ```
 
@@ -111,6 +123,7 @@ The parameter `c(6, 5)` sets the number of rows to display to 6 and the number o
 Alternatively, you may want to load the whole data frame into the viewer with
 
 ```{r}
+#| label: chunk-12
 #| eval: false
 View(EU_elections)
 ```
@@ -120,6 +133,7 @@ When we look at the data, we find that there are some problems. Underneath the v
 To avoid these problems, we can tell the function `read_excel()` to skip the first two lines.
 
 ```{r}
+#| label: chunk-13
 #| code-overflow: wrap
 EU_elections <- read_excel(
   "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx",
@@ -130,6 +144,7 @@ head(EU_elections, c(6, 7))
 Now, we have the problem that the first line of data is used as variable names. So, we also tell the function to **not** read column names
 
 ```{r}
+#| label: chunk-14
 #| code-overflow: wrap
 EU_elections <- read_excel(
   "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx",
@@ -141,6 +156,7 @@ head(EU_elections, c(6, 7))
 Instead of `col_names = FALSE`, we can also provide a vector of variable names to the parameter `col_names`. This will give us a nice data frame to use.
 
 ```{r}
+#| label: chunk-15
 EU_elections <- read_excel(
   "eu-wahl2014-endgueltiges_ergebnis_mit_briefwahl.xlsx",
   skip=2, 
@@ -164,6 +180,7 @@ R provides two functions for reading a CSV file: `read.csv()` and `read.csv2()`.
 Some data import functions in R allow you to specify a url instead of a local filepath for the file. The two CSV-functions are among them, `read_excel()`is not. When you go back to the <https://www.data.gv.at/> webpage, to the entry "Ergebnisse der EU-Wahl 2014 (BMI)", you will see an orange icon marked "CSV". Right-click this icon and select Copy Link to copy the url into your computer's clipboard. Paste this url into the following call of `read.csv2()`.
 
 ```{r}
+#| label: chunk-16
 #| eval: false
 csvurl <- paste("https://www.data.gv.at/katalog/dataset/", 
                 "2b10a91b-51d5-4e34-b992-8fd3a3121f0d/resource/",
@@ -176,6 +193,7 @@ EU_elections_csv <- read.csv2(csvurl)
 This does not work. The reason is again the issue with the column names, which are not unique. We can again skip the first two lines with `skip = 2`. Unfortunately, this function does not allow us to provide variable names as before. We can only set `header = FALSE` to prevent the function from interpreting the first line as variable names.
 
 ```{r}
+#| label: chunk-17
 csvurl <- paste("https://www.data.gv.at/katalog/dataset/", 
                 "2b10a91b-51d5-4e34-b992-8fd3a3121f0d/resource/",
                 "a5ccea30-a505-4376-bfa3-fa2585c69192/download/",
@@ -192,6 +210,7 @@ Note that the "ü" in "Burgenland Süd" is not read correctly. This issue is rel
 We use the following code to read the file with the correct encoding:
 
 ```{r}
+#| label: chunk-18
 csvurl <- paste("https://www.data.gv.at/katalog/dataset/", 
                 "2b10a91b-51d5-4e34-b992-8fd3a3121f0d/resource/",
                 "a5ccea30-a505-4376-bfa3-fa2585c69192/download/",
@@ -209,6 +228,7 @@ Now the Umlaut characters are displayed correctly.
 With `read.csv2()`, we cannot specify the variable names and have to set the correct names in a separate step. With the function `colnames()` we can get and set the column names of a data frame.
 
 ```{r}
+#| label: chunk-19
 colnames(EU_elections_csv) <- c("GKZ", "Name", "Voters", "Turnout", 
       "Votes", "invalid", "valid", "ÖVP", "ÖVP_percent", "SPÖ", 
       "SPÖ_percent", "FPÖ", "FPÖ_percent", "GRÜNE", "GRÜNE_percent", 
@@ -245,6 +265,7 @@ You can call this function also from the Environment pane of the Environment win
 Somewhere between `head()` and `tail()` on the one hand and `View()` on the other is the `glimpse()` command from the package "dplyr". This package is loaded automatically when you load the package "tidyverse" (see below).
 
 ```{r}
+#| label: chunk-20
 library(dplyr)
 glimpse(EU_elections)
 ```
@@ -256,6 +277,7 @@ This function displays the size of the data frame (number of rows and number of 
 There are a number of packages that provide functions for nicely formatted tables. One example is the function `gt()` from the "gt" package. Try it out with the following code.
 
 ```{r}
+#| label: chunk-21
 library(gt)
 gt(EU_elections[1:8, 1:7])
 ```
@@ -275,6 +297,7 @@ For this section, I follow the video "Data wrangling with R in 27 minutes" by An
 Before we continue, let us first load the package "tidyverse" (this produces some output which I suppress here):
 
 ```{r}
+#| label: chunk-22
 #| output: false
 
 library(tidyverse)
@@ -291,6 +314,7 @@ The dataframe "EU_elections" that we loaded before, contains information about a
 When we inspect the data we see that for all communes in Lower Austria the first variable (GKZ) starts with "G3". So, we want to select those rows where "GKZ" starts with "G3". We do this with the function `filter()`. We can use this function in the standard form by giving it the input data frame and a condition for the filtering. For the condition, we use the function `str_starts()` and pass it the name of the variable to investigate and the string that we want the variable to start with. The following function returns "TRUE" when the variable "GKZ" starts with "G3" and FALSE otherwise.
 
 ```{r}
+#| label: chunk-23
 #| eval: false
 str_starts(GKZ, "G3") 
 ```
@@ -298,6 +322,7 @@ str_starts(GKZ, "G3")
 So, our filter is as follows. We put the result into the data frame "tst".
 
 ```{r}
+#| label: chunk-24
 tst <- filter(EU_elections, str_starts(GKZ, "G3"))
 ```
 
@@ -306,6 +331,7 @@ Load the result into the viewer with `View(tst)`. You should only see data for L
 Using piping, we can achieve exactly the same result with
 
 ```{r}
+#| label: chunk-25
 tst <- EU_elections %>% 
   filter(str_starts(GKZ, "G3"))
 ```
@@ -315,12 +341,14 @@ Here, we first determine the data frame and then pipe that to `filter()` with th
 In this simple example, the benefits of piping are not so obvious. They may become clearer when we want to use an additional filter. Say, we want to use only those observations from Lower Austria where the number of voters is larger than 10,000. In the standard notation, we can achieve this with a second condition in the `filter()` command:
 
 ```{r}
+#| label: chunk-26
 tst <- filter(EU_elections, str_starts(GKZ, "G3"), Voters > 10000)
 ```
 
 With piping, we may use the result of the first `filter()`command and pipe it into a second one.
 
 ```{r}
+#| label: chunk-27
 tst <- EU_elections %>% 
   filter(str_starts(GKZ, "G3")) %>% 
   filter(Voters > 10000)
@@ -329,6 +357,7 @@ tst <- EU_elections %>%
 When we look at the result, we see that our filter also returns aggregates (districts, regions, the whole state). To eliminate those, we pipe the result through another filter. Now, we check whether "GKZ" ends with "00". This characterizes the aggregates. Since we want to *eliminate* those, we have to negate the result of `str_ends` with an exclamation mark ("!").
 
 ```{r}
+#| label: chunk-28
 tst <- EU_elections %>% 
   filter(str_starts(GKZ, "G3")) %>% 
   filter(Voters > 10000) %>% 
@@ -342,12 +371,14 @@ This produces the expected output and also demonstrates the value of piping. The
 To select columns from the data frame, we use the command `select()`. To illustrate this command, say, we want to extract only the columns "GKZ", "Name", "Voters", "Votes" and "valid". We do this in the following way
 
 ```{r}
+#| label: chunk-29
 tst <- select(EU_elections, "GKZ", "Name", "Voters", "Votes", "valid")
 ```
 
 Alternatively, we can also identify the columns by number. Above, we selected columns 1 to 3, 5, and 7. Therefore, the above statement is equivalent to
 
 ```{r}
+#| label: chunk-30
 tst <- select(EU_elections, 1:3, 5, 7)
 ```
 
@@ -356,6 +387,7 @@ View the results of both versions to verify that they are identical and only con
 There are a number of helper functions available that allow us to identify columns by name. Suppose we want to exclude all the columns with "percent" in the name (all the percent variables). We could use the following command (it selects all columns whose name does not contain "percent").
 
 ```{r}
+#| label: chunk-31
 tst <- select(EU_elections, !contains("percent"))
 ```
 
@@ -366,18 +398,21 @@ Note the exclamation mark in front of `contains()`. We could also have used a mi
 Sometimes you need the observatons in a data frame in a certain order. Observations can be ordered with the `arrange()` command. All this command needs is the name of the variable by which to order. Suppose we want to see the data arranged by "GRÜNE_percent". We use this command:
 
 ```{r}
+#| label: chunk-32
 tst <- arrange(EU_elections, GRÜNE_percent)
 ```
 
 In the results we see immediately that Tschanigraben in Burgenland has the lowest percentage (actually, the first eight communes all have no votes for this party). To find who has the highest percentage (the 7th district in Vienna), we have to scroll all the way to the bottom. If we want to arrange the observations in descending order of this variable, we just use a minus sign.
 
 ```{r}
+#| label: chunk-33
 tst <- arrange(EU_elections, -GRÜNE_percent)
 ```
 
 The function `arrange()` can handle any number of variables and uses them from left to right to sort the observations. Say, we would like to order the observations for every State of Austria descending by the percentage of the party "GRÜNE". We could do this with the following command:
 
 ```{r}
+#| label: chunk-34
 tst <- arrange(EU_elections, substr(GKZ, 1, 2), -GRÜNE_percent)
 ```
 
@@ -388,6 +423,7 @@ We use the function `substr(GKZ, 1, 2)` to extract the first two characters from
 With the command `mutate()` you can create new variables in the data frame. Suppose we want to see how the two parties that are currently in a coalition at the national level, ÖVP and GRÜNE, did in the EU elections 2014. So, we want to create a new variable, "COAL_percent" which is the sum of "ÖVP_percent" and "GRÜNE_percent". To limit the output, we also reduce the number of columns using the previously discussed instruments. Since there is no need for saving the converted data frame, we pipe it to `glimpse()` at the end.
 
 ```{r}
+#| label: chunk-35
 EU_elections %>% 
   select(1:2, contains("percent")) %>% 
   mutate(COAL_percent = ÖVP_percent + GRÜNE_percent) %>% 
@@ -404,6 +440,7 @@ This section is only intended for demonstration purposes. Some of the functions 
 We want to look at the EU election data by state ("Bundesland") and by district ("Bezirk"). First, we extract the respective rows from the data-frame. By inspecting the data-frame, we see that the GKZ-column of all state rows ends with "0000". So, we can filter by this condition.
 
 ```{r}
+#| label: chunk-36
 bl <- EU_elections %>% 
   filter(str_ends(GKZ, "0000")) %>% 
   filter(!str_ends(GKZ, "00000"))
@@ -414,6 +451,7 @@ For the districts, we need to filter all rows that end on "00", but, eliminate t
 In the last line, we generate a variable `g_id` with the (numeric) district id. Note that this variable has the same name as the district id in `bez`.
 
 ```{r}
+#| label: chunk-37
 bez <- EU_elections %>% 
   filter(!is.na(as.numeric(str_sub(GKZ, 2,4))))  %>% 
   filter(!str_ends(GKZ, "0000")) %>% 
@@ -428,6 +466,7 @@ Although `ggplot2` has become the standard tool for graphing in R, the simple `p
 First, we want to plot the variables "ÖVP_percent" and "SPÖ_percent". We select these two variables from the dataframe and pipe them to the `plot` function:
 
 ```{r}
+#| label: chunk-38
 bez %>% 
   select("ÖVP_percent", "SPÖ_percent") %>% 
   plot()
@@ -436,6 +475,7 @@ bez %>%
 Then, we are asked to add the results for FPÖ to our output. When we just add "FPÖ_percent" to our `select` statement, this is what we get:
 
 ```{r}
+#| label: chunk-39
 bez %>% 
   select("ÖVP_percent", "SPÖ_percent", "FPÖ_percent") %>% 
   plot()
@@ -446,6 +486,7 @@ The result is a **matrix of scatterplots** for all the pairs of variables. The c
 We may then want to see all parties in one matrix. For that, we select the variables that contain "percent" (as above)
 
 ```{r}
+#| label: chunk-40
 bez %>% 
   select(contains("percent")) %>% 
   plot()
@@ -454,6 +495,7 @@ bez %>%
 For the plot function, we always need at least two variables. When we provide just one, the output is not what we expect.
 
 ```{r}
+#| label: chunk-41
 bez %>% 
   select("SPÖ_percent") %>%  
   plot()
@@ -462,6 +504,7 @@ bez %>%
 We need to add a sequence and probably want to plot the data by size. Below, we sort the data with `arrange` and then add a variable named "sequence" with values running from 1 to the number of rows in the dataframe (`n()`). We change the plot type to "l" for lines. If we want to see the observations as well, we can use "b" ("both") instead.
 
 ```{r}
+#| label: chunk-42
 bez %>% 
   select("SPÖ_percent") %>% 
   arrange(SPÖ_percent) %>% 
@@ -478,6 +521,7 @@ In recent years, `ggplot2` has become something like the standard tool for graph
 First, we want to plot the number of voters in the Bundesländer in a vertical bars graph.
 
 ```{r}
+#| label: chunk-43
 bl %>% 
   ggplot(aes(Name, Voters)) +
   geom_col()
@@ -486,6 +530,7 @@ bl %>%
 We want the bars in a different color. With `color` we can set the outline of the bars, with `fill` the color of the filling.
 
 ```{r}
+#| label: chunk-44
 bl %>% 
   ggplot(aes(Name, Voters)) +
   geom_col(color="darkblue", fill="blue")
@@ -494,6 +539,7 @@ bl %>%
 ### A Scatterplot
 
 ```{r}
+#| label: chunk-45
 bez %>% 
   ggplot(aes(ÖVP_percent, SPÖ_percent)) +
   geom_point()
@@ -502,6 +548,7 @@ bez %>%
 We can overlay a regression line that shows the average relation between the two variables. By default, a confidence interval is added. When we specify `se = NULL`, the confidence interval is dropped.
 
 ```{r}
+#| label: chunk-46
 bez %>% 
   ggplot(aes(ÖVP_percent, SPÖ_percent)) +
   geom_point() +
@@ -517,6 +564,7 @@ We load the package `sf`. It implements the "Simple Feature" concept in R.
 We read the shapefile for the Austrian districts into `bez_map`. When we inspect it, we see that there is a column with the district ID and one called `geometry` with the outlines of each of the districts.
 
 ```{r}
+#| label: chunk-47
 library(sf)
 
 bez_map <- st_read("OGDEXT_POLBEZ_1_STATISTIK_AUSTRIA_20230101/STATISTIK_AUSTRIA_POLBEZ_20230101.shp")
@@ -525,6 +573,7 @@ bez_map <- st_read("OGDEXT_POLBEZ_1_STATISTIK_AUSTRIA_20230101/STATISTIK_AUSTRIA
 To see what we got, we select the variable `geometry` and plot it. We get the outlines of the districts.
 
 ```{r}
+#| label: chunk-48
 bez_map  %>%  
   select(geometry)  %>%  
   plot()
@@ -533,6 +582,7 @@ bez_map  %>%
 Now, we merge the data in `bez` with the geographical information in `bez_map`. Since we used the same name for the district id, the function uses these values for merging. Then, we pipe the result to the function `st_as_sf()` to convert to "Simple Format".
 
 ```{r}
+#| label: chunk-49
 bez_full <- merge(bez_map, bez)  %>% 
   st_as_sf()
 ```
@@ -540,6 +590,7 @@ bez_full <- merge(bez_map, bez)  %>%
 Now, we are ready to plot the map. In the `aes()` function we specify that the areas should be filled according to the values of `GRÜNE_percent`. `geom_sf()` does the mapping, `scale_fill_viridis_c()` sets the color schema.
 
 ```{r}
+#| label: chunk-50
 ggplot(bez_full, aes(fill=GRÜNE_percent)) +
   geom_sf() +
   scale_fill_viridis_c()
@@ -548,6 +599,7 @@ ggplot(bez_full, aes(fill=GRÜNE_percent)) +
 Strangely, by default the lowest values are assigned the darkest colors. To reverse this, we set the parameter `direction` to -1.
 
 ```{r}
+#| label: chunk-51
 ggplot(bez_full, aes(fill=GRÜNE_percent)) +
   geom_sf() +
   scale_fill_viridis_c(direction = -1)
@@ -566,6 +618,7 @@ One of the most used functions in R is `summary()`. It is a generic function tha
 When we call `summary()` with a data frame, the function prints summary statistics for all the variables in the data frame. Here is the result for the data frame "diamonds".
 
 ```{r}
+#| label: chunk-52
 summary(diamonds)
 ```
 
@@ -580,6 +633,7 @@ We would like to get some of the statistics that we saw above for the whole data
 Suppose we want to get the mean and the standard deviation of the price for each of the "cut" categories. The following set of commands does exactly that. You can use any number of parameters for `summarize()`.
 
 ```{r}
+#| label: chunk-53
 diamonds  %>%  
   group_by(cut)   %>%   
   summarize(mean(price), sd(price))
@@ -588,6 +642,7 @@ diamonds  %>%
 We can define more appropriate headings for the columns:
 
 ```{r}
+#| label: chunk-54
 diamonds %>% 
   group_by(cut) %>% 
   summarize(av_price = mean(price), sd_price = sd(price))
@@ -596,6 +651,7 @@ diamonds %>%
 The special function `n()` gives the number of observations in each group.
 
 ```{r}
+#| label: chunk-55
 diamonds %>% 
   group_by(cut) %>% 
   summarize(av_price = mean(price), sd_price = sd(price), count = n())
@@ -604,6 +660,7 @@ diamonds %>%
 When we use more than one categorical variable in the `group_by()` command, we get more and smaller groups. The grouping is first done for the first variable, then within each group for the second variable, and so on.
 
 ```{r}
+#| label: chunk-56
 diamonds %>% 
   group_by(cut, color) %>% 
   summarize(av_price = mean(price), sd_price = sd(price), count = n())
@@ -614,6 +671,7 @@ diamonds %>%
 We want to know whether the categories "cut" and "color" are related. Let us first create a two-way table.
 
 ```{r}
+#| label: chunk-57
 table(diamonds$cut, diamonds$color)
 ```
 
@@ -622,6 +680,7 @@ Since the command `table()` does not expect the data frame as the first paramete
 Alternatively, we can `attach()` the data frame "diamonds". When we do this, R will first look for variables in this dataframe. To undo this connection, use the command `detach()`.
 
 ```{r}
+#| label: chunk-58
 attach(diamonds)
 table(cut, color)
 ```
@@ -629,6 +688,7 @@ table(cut, color)
 Instead of just printing the table, we should store it in an object and then work with this object. When we print the object, we get the same output as above.
 
 ```{r}
+#| label: chunk-59
 mytable <- table(cut, color)
 mytable
 ```
@@ -636,6 +696,7 @@ mytable
 With `summary()`, we get meta information about the table and the results of a Chi-square test.
 
 ```{r}
+#| label: chunk-60
 mytable <- table(cut, color)
 summary(mytable)
 ```
@@ -643,6 +704,7 @@ summary(mytable)
 Instead of the absolute frequencies, we may want to see relative frequencies. Also, we can request the Chi-square test explicitly from the table object.
 
 ```{r}
+#| label: chunk-61
 mytable <- table(diamonds$cut, diamonds$color)
 prop.table(mytable)
 chisq.test(mytable)
@@ -651,6 +713,7 @@ chisq.test(mytable)
 To reduce the number of digits in the table, wrap it in the `round()` function and supply the number of digits you want.
 
 ```{r}
+#| label: chunk-62
 mytable <- table(diamonds$cut, diamonds$color)
 round(prop.table(mytable),4)
 ```
@@ -664,12 +727,14 @@ For the analysis of variance, we have to specify a model formula. This is the sa
 Our model formula says: use "price" as the dependent variable and "cut", "color" and "clarity" as explanatory variables. Note the "\~" between "price" and the other variables and that the explanatory variables are combined with "+".
 
 ```{r}
+#| label: chunk-63
 aov(price ~ cut + color + clarity)
 ```
 
 When we use the `aov()` command, the output is limited. We can get more detailed information with `summary()`. We store the result of `aov()` in an object and supply that to `summary()`.
 
 ```{r}
+#| label: chunk-64
 anova <- aov(price ~ cut + color + clarity)
 summary(anova)
 ```
@@ -681,12 +746,14 @@ We see that all three categorical variables significantly influence the price.
 We want to know how carat and the categories influence the price of diamonds. We run a linear regression with the command `lm()`. We expand the above model formula with "carat".
 
 ```{r}
+#| label: chunk-65
 lm(price ~ carat + cut + color + clarity)
 ```
 
 When we run this, we get again very limited output. We get more information with the `summary()` function (we store the result of the regression analysis in the object "reg" and supply that to `summary()`).
 
 ```{r}
+#| label: chunk-66
 reg <- lm(price ~ carat + cut + color + clarity)
 summary(reg)
 ```
@@ -700,6 +767,7 @@ Anyways, we see that most regression coefficients are highly significant. From t
 For each of the categorical variables we get a number of regression coefficients. Most of them are significant, but not all. To check whether or not a categorical variable, say "color", as a whole is significant, we can run a likelihood ratio test. For that, we first run a regression with this variable dropped from the model formula
 
 ```{r}
+#| label: chunk-67
 reg.2 <- lm(price ~ carat + cut + clarity)
 summary(reg.2)
 ```
@@ -707,6 +775,7 @@ summary(reg.2)
 Now, we have two objects with regression results stored; "reg" and "reg.2". The package "lmtest" provides a function for likelihood ratio tests (`lrtest()`).
 
 ```{r}
+#| label: chunk-68
 library(lmtest)
 lrtest(reg.2, reg)
 ```
@@ -718,6 +787,7 @@ The result shows that the six color variables together have a significant impact
 An important aspect of regression analysis is to check the residuals of the "reg" model. The residuals are included in the "reg" object and can be accessed via `reg$residuals`. First, we calculate the mean and the standard deviation of the residuals, the minimum and the maximum.
 
 ```{r}
+#| label: chunk-69
 (reg.mean <- mean(reg$residuals))
 (reg.sd <- sd(reg$residuals))
 min(reg$residuals)
@@ -727,6 +797,7 @@ max(reg$residuals)
 In a second step, we plot a histogram of the residuals and overlay it with a normal density function with the mean and standard deviation that we calculated above.
 
 ```{r}
+#| label: chunk-70
 hist(reg$residuals, breaks=50, freq=FALSE)
 curve(dnorm(x, mean=reg.mean, sd=reg.sd), 
       col="darkblue", lwd=2, add=TRUE)
@@ -753,6 +824,7 @@ With the "disk" icon in the tools bar of the History pane you can save the whole
 As mentioned before, you can collect R commands in R scripts either manually or by saving the history. R scripts have the file extension ".R". You can run the script (i.e., all the included commands in sequence) from the command line of your operating system with the program "Rscript". Alternatively, you can open the script in RStudio (File - Open File) and then execute it via the Source button. That is equivalent to typing `source("<path to script>")`in the console. For example, the following line runs the script "myscript.R" and echoes the commands in the script and their output:
 
 ```{r}
+#| label: chunk-71
 source("myscript.R", echo=TRUE)
 ```
 
@@ -810,6 +882,7 @@ Code chunks start with ```` ```{r} ```` and end with ```` ``` ````. Everything b
 You can also embed code directly into your text. The syntax for that is the following:
 
 ```{r}
+#| label: chunk-72
 #| eval: false
 `r <code>`
 ```
@@ -817,6 +890,7 @@ You can also embed code directly into your text. The syntax for that is the foll
 This is most useful to extract specific results from the analysis. For example, we can use
 
 ```{r}
+#| label: chunk-73
 #| eval: false
 `r reg$coefficients["carat"]` 
 ```
